@@ -30,6 +30,48 @@ function attack(job, hitMod, dmgMod, ac){
     }
 }
 
+function combat(team1, team2){
+    while(team1.length != 0 && team2.length != 0){
+        let init = initiative();
+        if(init == -1){
+            assault(team1, team2);
+            destroy(team2);
+            assault(team2, team1);
+            destroy(team1);
+        } else if (init == 0){
+            assault(team1, team2);
+            assault(team2, team1);
+            destroy(team1);
+            destroy(team2);
+        } else{
+            assault(team2, team1);
+            destroy(team1);
+            assault(team1, team2);
+            destroy(team2);
+        }
+    }
+}
+
+function destroy(team){
+    let i = 0;
+    while(i < team.length){
+        if(team[i].hp < 0)
+            team[i].remove();
+        else
+            i++;
+    }
+}
+
+function assault(team1, team2){
+    let i = 0;
+    while(i < team1.length){
+        let target = roll(team2.length)-1;
+        dmg = attack(team1[i].job, team1[i].hitMod, team1[i].dmgMod, team2[target].ac);
+        team2[target].hp -= dmg;
+        i++;
+    }
+}
+
 function chooseDmg(job) {
     if(job == "MU" || job == "fighter")
         return roll(4)+roll(4);
