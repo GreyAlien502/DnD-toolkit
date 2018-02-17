@@ -198,7 +198,8 @@ class CharacterBuilder extends React.Component {
         }
 
         let save = () =>{
-            this.state.addCharacter(this.char);
+            this.state.char['name'] = document.getElementById("newName").value;
+            this.state.addCharacter(this.state.char);
         }
 
         return <div>
@@ -213,7 +214,7 @@ class CharacterBuilder extends React.Component {
 
             <button onClick={buildRandom}>Create Random</button>
 
-            {this.state.isClicked?<button onClick={save}>Save</button> : null}
+            {this.state.isClicked?<div><button onClick={save}>Save</button> <input type="text" id="newName"/></div>: null}
 
         </div>;
     }
