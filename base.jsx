@@ -7,7 +7,7 @@ class CharacterInfo extends React.Component {
 	}
 	render(){
 		return (<div>
-			{"{name} Level:{level} {job} AC:{ac} HP:{hp} STR:{str} INT:{int} WIS:{wis} DEX:{dex} CON:{con} CHA:{cha}".format(this.state)}
+			{"{name} Level:{level} {job} AC:{ac} HP:{hp} STR:{str} INT:{int} WIS:{wis} DEX:{dex} CON:{con} CHA:{cha}".format(this.state.character)}
 		</div>);
 	}
 
