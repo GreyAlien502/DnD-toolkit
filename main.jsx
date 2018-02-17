@@ -1,4 +1,3 @@
-console.log('aeua');
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -10,14 +9,28 @@ import {CharacterLibrary} from './characterLibrary.jsx';
 class Main extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log('aeuaeu');
 		this.state = {
 			characters: [],
 			teams: [],
 			mode: 'character builder'
 		};
+		window.localStorage.setItem('characterData',JSON.stringify(this.state))
 	}
 	render() {
+		let addCharacter = character => {
+			console.log(character);
+			let newCharacter = Object.assign(
+				{id:(new Date()).getTime()},
+				character
+			);
+			let characters = this.state.characters.slice();
+			characters.push(newCharacter);
+			window.localStorage.setItem('characterData',JSON.stringify(Object.assign( {
+				teams:this.state,
+				characters
+			} )));
+			this.update();
+		};
 		return (<div>
 			<button onClick={()=>this.setState({'mode':'character builder'})}>
 				Character Builder
@@ -29,7 +42,7 @@ class Main extends React.Component {
 				Character Library
 			</button>
 			{{
-				'character builder': <CharacterBuilder addCharacter={()=>0}/>,
+				'character builder': <CharacterBuilder addCharacter={(character)=>addCharacter(character)}/>,
 				'combat simulator': (<CombatSimulator
 					characters={this.state.characters}
 					teams={this.state.teams}
@@ -37,10 +50,17 @@ class Main extends React.Component {
 				'character library': (<CharacterLibrary
 					characters={this.state.characters}
 					teams={this.state.teams}
-					update={()=>0}
+					update={(newState)=>this.setState(newState)}
 				/>)
 			}[this.state.mode]}
 		</div>);
+	}
+	update(CharData){
+		let characterData = JSON.parse(window.localStorage.getItem('characterData'));
+		this.setState({
+			characters:characterData.characters,
+			teams:characterData.teams
+		});
 	}
 }
 

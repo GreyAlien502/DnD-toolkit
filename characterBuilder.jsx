@@ -198,8 +198,8 @@ class CharacterBuilder extends React.Component {
         }
 
         let save = () =>{
-            this.state.char['name'] = document.getElementById("newName").valueOf();
-            this.state.addCharacter(this.char);
+            this.state.char['name'] = document.getElementById("newName").value;
+            this.state.addCharacter(this.state.char);
         }
 
         return <div>
