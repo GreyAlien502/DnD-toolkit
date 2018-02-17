@@ -25,6 +25,8 @@ function Character(name, job, level){
     else this.con = roll4d6();
     this.cha = roll4d6();
 
+    this.dmgMod = setDmgMod(job, level);
+    this.hitMod = hitMod(job, level);
     this.ac = setAC(job, level);
     this.hpMax = setHP();
 }
@@ -38,26 +40,15 @@ function roll4D6Min(min){
     return temp;
 }
 
-function setMinDamage(job, level){
+function setDmgMod(job, level){
     if(job = "fighter")
-        return 2 + level;
+        return level;
     if(job = "thief")
-        return Math.floor(1+ level/3)
+        return Math.floor(level/3)
     if(job = "cleric")
-        return Math.floor(2 + level/2)
+        return Math.floor(level/2)
     if(job = "MU")
-        return 2 + level;
-}
-
-function setMaxDamage(job, level){
-    if(job = "fighter")
-        return 8 + level;
-    if(job = "thief")
-        return Math.floor(4+ level/3)
-    if(job = "cleric")
-        return Math.floor(5 + level/2)
-    if(job = "MU")
-        return 8 + level;
+        return level;
 }
 
 function setAC(job, level){
