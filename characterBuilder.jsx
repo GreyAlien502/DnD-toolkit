@@ -159,22 +159,24 @@ function roll(num){
 class CharacterBuilder extends React.Component {
     constructor(props){
         super(props)
-        this.state=Object.assign({isClicked:false},props);
+        this.state=Object.assign({isClicked:false, char:null},props);
     }
 
     render(){
-        let char;
-        function buildFighter(){
-            char = new Character("Fighter", "fighter", 1);
+        let buildFighter = () =>{
+            this.setState({char : new Character("Fighter", "fighter", 1)});
+            click();
         }
-        function buildCleric(){
-            char = new Character("Cleric", "cleric", 1);
+        let buildCleric = () =>{
+            this.setState({char : new Character("Cleric", "cleric", 1)});
+            click();
         }
-        function buildThief(){
-            char = new Character("Thief", "thief", 1);
+        let buildThief = () =>{
+            this.setState({char : new Character("Thief", "thief", 1)});
+            click();
         }
-        function buildMU(){
-            char = new Character("Magic-User", "MU", 1);
+        let buildMU = () =>{
+            this.setState({char : new Character("Magic-User", "MU", 1)});
             click();
         }
 
@@ -196,7 +198,7 @@ class CharacterBuilder extends React.Component {
         }
 
         let save = () =>{
-            this.state.addCharacter(char);
+            this.state.addCharacter(this.char);
         }
 
         return <div>
