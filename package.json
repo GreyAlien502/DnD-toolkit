@@ -1,0 +1,19 @@
+{
+  "name": "dnd-toolkit",
+  "version": "1.0.0",
+  "description": "Tools for DnD",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GreyAlien502/DnD-toolkit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GreyAlien502/DnD-toolkit/issues"
+  },
+  "homepage": "https://github.com/GreyAlien502/DnD-toolkit#readme"
+}
