@@ -1,4 +1,10 @@
 import React from 'react';
+import ReactList from 'react-list';
+import { render } from 'react-dom';
+import Button from 'material-ui/Button';
+//custom-made characterModifier
+import {CharacterModifier} from './characterModifier.jsx'
+
 
 class CharacterLibrary extends React.Component {
 	constructor(props) {
@@ -24,24 +30,28 @@ class CharacterLibrary extends React.Component {
 	}
 
 	render(){
+		function charaSelect() {
+
+		}
+
 		var teamDiv, charDiv;
 		if(this.state.isCharToggleOn){
-			charDiv = <div>{this.state.characters.map(function(d, idx){
+			charDiv = <div class="column">{this.state.characters.map(function(d, idx){
                 return (<button key={idx}>{d.name}</button>)
             })}
-                <br /></div>;
+                <img src={'http://barkpost-assets.s3.amazonaws.com/wp-content/uploads/2013/11/plainDoge-700x525.jpg'} width="300" /></div>;
 		}
 		else{
-			charDiv = <div />;
+			charDiv = <div class="column"/>;
 		}
 
 		if(this.state.isTeamToggleOn){
-			teamDiv = <div>{this.state.teams.map(function(d, idx){
+			teamDiv = <div class="column">{this.state.teams.map(function(d, idx){
 				return (<button key={idx}>{d.name}</button>)})}
-                <br /></div>;
+                 <img src={'http://barkpost-assets.s3.amazonaws.com/wp-content/uploads/2013/11/plainDoge-700x525.jpg'} width="300" /></div>;
 		}
 		else {
-			teamDiv = <div />;
+			teamDiv = <div class="column" />;
 		}
 
 		return <div>
@@ -49,11 +59,13 @@ class CharacterLibrary extends React.Component {
 			<button onClick={()=>this.handleCharToggle()}>
 				character
 			</button>
-				{charDiv}
+
         	<button onClick={()=>this.handleTeamToggle()}>
             	teams
         	</button>
-				{teamDiv}
+			<div class="row">
+            {charDiv}{teamDiv}
+			</div>
 			</div>;
 
 	}

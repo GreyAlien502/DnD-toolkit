@@ -12,7 +12,7 @@ class CharacterInfo extends React.Component {
 	}
 
 	renderHP(){
-		return "HP: "+this.state.hpMax;
+		return "HP: "+ this.state.hpMax;
 	}
 }
 
