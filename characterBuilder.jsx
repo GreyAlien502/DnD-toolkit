@@ -159,25 +159,21 @@ function roll(num){
 class CharacterBuilder extends React.Component {
     constructor(props){
         super(props)
-        this.state=Object.assign({isClicked:false, char:null},props);
+        this.state=Object.assign({char:null},props);
     }
 
     render(){
         let buildFighter = () =>{
             this.setState({char : new Character("Fighter", "fighter", 1)});
-            click();
         }
         let buildCleric = () =>{
             this.setState({char : new Character("Cleric", "cleric", 1)});
-            click();
         }
         let buildThief = () =>{
             this.setState({char : new Character("Thief", "thief", 1)});
-            click();
         }
         let buildMU = () =>{
             this.setState({char : new Character("Magic-User", "MU", 1)});
-            click();
         }
 
 
@@ -193,28 +189,25 @@ class CharacterBuilder extends React.Component {
                 buildFighter();
         }
 
-        let click= ()=> {
-            this.setState({isClicked:true});
-        }
-
         let save = () =>{
             this.state.char['name'] = document.getElementById("newName").value;
             this.state.addCharacter(this.state.char);
         }
 
         return <div>
-
-            <button onClick={buildFighter}> Create Fighter </button>
-
-            <button onClick={buildCleric}> Create Cleric </button>
-
-            <button onClick={buildThief}> Create Thief </button>
-
-            <button onClick={buildMU}>Create Magic-User</button>
-
-            <button onClick={buildRandom}>Create Random</button>
-
-            {this.state.isClicked?<div><button onClick={save}>Save</button> <input type="text" id="newName"/></div>: null}
+		<button onClick={buildFighter}> Create Fighter </button> 
+		<button onClick={buildCleric}> Create Cleric </button> 
+		<button onClick={buildThief}> Create Thief </button> 
+		<button onClick={buildMU}>Create Magic-User</button> 
+		{this.state.char?
+			<div>
+				<CharacterInfo character={this.state.char} />
+				<div><button onClick={save}>Save</button>
+				<input type="text" id="newName"/></div>
+			</div>
+		:
+			null
+		}
 
         </div>;
     }
