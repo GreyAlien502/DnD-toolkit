@@ -2,9 +2,9 @@ console.log('aeua');
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { CharacterBuilder } from './characterBuilder.jsx';
-import { CombatSimulator } from './combatSimulator.jsx';
-import { CharacterLibrary } from './characterLibrary.jsx';
+import CharacterBuilder  from './characterBuilder.jsx';
+import CombatSimulator from './combatSimulator.jsx';
+import CharacterLibrary from './characterLibrary.jsx';
 
 
 class Main extends React.Component {

@@ -10,4 +10,4 @@ class CharacterBuilder extends React.Component {
 	}
 }
 
-export {CharacterBuilder};
+export CharacterBuilder;

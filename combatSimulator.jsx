@@ -10,4 +10,4 @@ class CombatSimulator extends React.Component {
 	}
 }
 
-export {CombatSimulator};
+export CombatSimulator;

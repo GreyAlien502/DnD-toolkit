@@ -10,4 +10,4 @@ class CharacterLibrary extends React.Component {
 	}
 }
 
-export {CharacterLibrary};
+export CharacterLibrary;
