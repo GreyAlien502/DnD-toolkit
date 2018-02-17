@@ -6,21 +6,21 @@ function Character(name, job, level){
     this.job = job;
     this.level = level;
 
-    if(job = "fighter")
+    if(job == "fighter")
         this.str = roll4D6Min(9);
     else this.str = roll4d6();
-    if(job = "MU")
+    if(job == "MU")
         this.int = roll4D6Min(9);
     else this.int = roll4d6();
-    if(job = "cleric")
+    if(job == "cleric")
         this.wis = roll4d6(9);
     else this.wis = roll4d6();
-    if(job = "MU")
+    if(job == "MU")
         this.dex = roll4D6Min(6);
-    else if(job = "thief")
+    else if(job == "thief")
         this.dex = roll4D6Min(9);
     else this.dex = roll4d6();
-    if(job = "fighter")
+    if(job == "fighter")
         this.con = roll4D6Min(7);
     else this.con = roll4d6();
     this.cha = roll4d6();
@@ -28,7 +28,7 @@ function Character(name, job, level){
     this.dmgMod = setDmgMod(job, level);
     this.hitMod = hitMod(job, level);
     this.ac = setAC(job, level);
-    this.hpMax = setHP();
+    this.hpMax = setHP(job, level);
 }
 
 function roll4D6Min(min){
@@ -41,38 +41,45 @@ function roll4D6Min(min){
 }
 
 function setDmgMod(job, level){
-    if(job = "fighter")
+    if(job == "fighter")
         return level;
-    if(job = "thief")
+    if(job == "thief")
         return Math.floor(level/3)
-    if(job = "cleric")
+    if(job == "cleric")
         return Math.floor(level/2)
-    if(job = "MU")
+    if(job == "MU")
         return level;
 }
 
 function setAC(job, level){
-    if(job = "fighter") return Math.floor(3 - level);
-    if(job = "MU") return Math.floor(10 - level / 2);
-    if(job = "thief") return Math.floor(8 - level / 2);
-    if(job = "cleric") return Math.floor(5 - level);
+    if(job == "fighter")
+        return Math.floor(3 - level);
+    if(job == "MU")
+        return Math.floor(10 - level / 2);
+    if(job == "thief")
+        return Math.floor(8 - level / 2);
+    if(job == "cleric")
+        return Math.floor(5 - level);
 }
 
 function setHP(job, level){
     let i = 0;
-    let hd;
+    let hdTemp = 0;
     let total = 0;
-    if(job = "fighter"){
-        hd = 10;
-        if(level = 0)
+    if(job == "fighter"){
+        hdTemp = 10;
+        if(level == 0)
             return roll(7);
     }
 
-    if(job = "MU") hd = 4;
-    if (job = "thief") hd = 6;
-    if(job = "cleric") hd = 8;
+    if(job == "MU")
+        hdTemp = 4;
+    if (job == "thief")
+        hdTemp = 6;
+    if(job == "cleric")
+        hdTemp = 8;
     while(i < level){
-        total += roll(hd);
+        total += roll(hdTemp);
         i++;
     }
     return total;
@@ -94,7 +101,7 @@ function roll4d6(){
 }
 
 function pickJob(){
-    let chance = Math.random()*100 + 1;
+    let chance = Math.floor(Math.random()*100) + 1;
     if(chance < 41)
         return "fighter";
     if(chance < 61)
@@ -105,8 +112,8 @@ function pickJob(){
 }
 
 function hitMod (job, level){
-    if(job = "fighter"){
-        if(level = 0)
+    if(job == "fighter"){
+        if(level == 0)
             return 0
         return level + 1;
     }
@@ -169,14 +176,14 @@ class CharacterBuilder extends React.Component {
 
 
         function buildRandom(){
-            let job = pickJob();
-            if(job = "MU")
+            let jobPicker = pickJob();
+            if(jobPicker == "MU")
                 buildMU();
-            if(job = "cleric")
+            if(jobPicker == "cleric")
                 buildCleric();
-            if(job = "thief")
+            if(jobPicker == "thief")
                 buildThief();
-            if(job = "fighter")
+            if(jobPicker == "fighter")
                 buildFighter();
         }
 
@@ -189,7 +196,8 @@ class CharacterBuilder extends React.Component {
 		<button onClick={buildFighter}> Create Fighter </button> 
 		<button onClick={buildCleric}> Create Cleric </button> 
 		<button onClick={buildThief}> Create Thief </button> 
-		<button onClick={buildMU}>Create Magic-User</button> 
+		<button onClick={buildMU}>Create Magic-User</button>
+        <button onClick={buildRandom}>Pick Randomly</button>
 		{this.state.char?
 			<div>
 				<CharacterInfo character={this.state.char} />

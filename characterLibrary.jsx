@@ -1,10 +1,7 @@
 import React from 'react';
-import ReactList from 'react-list';
-import { render } from 'react-dom';
-import Button from 'material-ui/Button';
+
 //custom-made characterModifier
 import {CharacterModifier} from './characterModifier.jsx';
-import DualListBox from 'react-dual-listbox';
 
 
 class CharacterLibrary extends React.Component {
@@ -49,7 +46,7 @@ class CharacterLibrary extends React.Component {
 		var teamDiv, charDiv;
 		if(this.state.isCharToggleOn){
 			charDiv = <div>{this.state.characters.map(function(d, idx){
-                return (<li key={idx}><Button onClick={()=>charaSelect(d)} key={idx}>Name: {d.name} Job: {d.job} Level: {d.level} </Button></li>)
+                return (<li key={idx}><button onClick={()=>charaSelect(d)} key={idx}>Name: {d.name} Job: {d.job} Level: {d.level} </button></li>)
             })}
                 <img src={'http://barkpost-assets.s3.amazonaws.com/wp-content/uploads/2013/11/plainDoge-700x525.jpg'} width="300" />
                 {this.state.isCharModifying?<CharacterModifier character={this.state.character}/>: null}</div>;
