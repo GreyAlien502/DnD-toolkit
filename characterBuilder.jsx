@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 function Character(name, job, level){
     this.name = name;
     this.job = job;
@@ -38,11 +37,26 @@ function roll4D6Min(min){
     return temp;
 }
 
+function setMinDamage(job, level){
+    if(job = fighter)
+        return 2 + level;
+    if(job = thief)
+        return Math.floor(1+ level/3)
+    if(job = cleric)
+        return Math.floor(2 + level/2)
+    if(job = MU)
+        return 2 + level;
+}
+
+function setMaxDamage(job, level){
+
+}
+
 function setAC(job, level){
-    if(job = fighter) return 3 - level;
-    if(job = MU) return 10 - level / 2;
-    if(job = thief) return 8 - level / 2;
-    if(job = cleric) return 5 - level;
+    if(job = fighter) return Math.floor(3 - level);
+    if(job = MU) return Math.floor(10 - level / 2);
+    if(job = thief) return Math.floor(8 - level / 2);
+    if(job = cleric) return Math.floor(5 - level);
 }
 
 function setHP(job, level){
@@ -135,53 +149,38 @@ function roll(num){
 
 
 class CharacterBuilder extends React.Component {
-	constructor(props){
-		super(props)
-		this.state=props;
-	}
+    constructor(props){
+        super(props)
+        this.state=props;
+    }
 
-	render(){
-		return <div>
-            <head>
-                <script type="text/javascript">
-                    <!
-                        function buildFighter(){
-                            Character(Fighter, fighter, 1);
-                        }
-                        function buildCleric(){
-                            Character(Cleric, cleric, 1);
-                        }
-                        function buildThief(){
-                            Character(Thief, thief, 1);
-                        }
-                        function buildMU(){
-                            Character(Magic-User, MU, 1);
-                        }
-                    }
-                    >
-                </script>
-            </head>
+    render(){
+        function buildFighter(){
+            Character(Fighter, fighter, 1);
+        }
+        function buildCleric(){
+            Character(Cleric, cleric, 1);
+        }
+        function buildThief(){
+            Character(Thief, thief, 1);
+        }
+        function buildMU(){
+            Character(Magic-User, MU, 1);
+        }
 
-            <body>
+        return <div>
 
-                <form>
-                    <input type="button" onclick="buildFighter()" value="Create Fighter" />
-                </form>
-                <form>
-                    <input type="button" onclick="buildCleric()" value="Create Cleric" />
-                </form>
-                <form>
-                    <input type="button" onclick="buildThief()" value="Create Thief" />
-                </form>
-                <form>
-                    <input type="button" onclick="buildMU()" value="Create Magic-User" />
-                </form>
+            <button onClick={buildFighter}> Create Fighter </button>
 
-            </body>
+            <button onClick={buildCleric}> Create Cleric </button>
+
+            <button onClick={buildThief}> Create Thief </button>
+
+            <button onClick={buildMU}>Create Magic-User</button>
+
+
         </div>;
-	}
-
-
+    }
 }
 
 export {CharacterBuilder};
