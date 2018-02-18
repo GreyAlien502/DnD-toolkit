@@ -76,7 +76,6 @@ function assault(team1, team2, superString){
     while(i < team1.length){
         let target = roll(team2.length)-1;
         let dmg = attack(team1[i].job, team1[i].hitMod, team1[i].dmgMod, team2[target].ac);
-        console.log(dmg);
         team2[target].hp -= dmg;
         if(dmg != 0)
             superString.push(team1[i].name + " has dealt " + dmg + " damage to " + team2[target].name + "!")

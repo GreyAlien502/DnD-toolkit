@@ -25,7 +25,6 @@ function Character(name, job, level){
     this.cha = roll4d6();
 
     this.dmgMod = setDmgMod(job, level, this.str, this.wis);
-    console.log(dmgMod);
     this.hitMod = hitMod(job, level, this.str, this.dex);
     this.ac = setAC(job, level, this.str, this.dex);
     this.hpMax = setHP(job, level, this.con);
