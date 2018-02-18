@@ -85,7 +85,7 @@ class Main extends React.Component {
 				'character library': (<CharacterLibrary
 					characters={this.state.characters}
 					teams={this.state.teams}
-					update={(newState)=>this.setState(newState)}
+					update={(newState)=>{this.setState(newState);this.save()}}
                     addCharacter={(character)=>addCharacter(character)}
                     removeCharacter={(id)=>removeCharacter(id)}
 					editCharacter={(character,id)=>editCharacter(character,id)}

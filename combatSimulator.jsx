@@ -111,9 +111,15 @@ import {CharacterInfo} from './base.jsx';
 class Fight extends React.Component {
 	constructor(props){
 		super(props);
-		this.state=props;
+		this.state={
+			message:combat(
+				makeTeam(props.team1),
+				makeTeam(props.team2)
+			)
+		}
 	}
 	render(){
+		return this.state.message;
 	}
 }
 
@@ -137,7 +143,9 @@ class TeamViewer extends React.Component {
 				</ul>
 			</div>:
 			"none.";
-
+	}
+	compontentWillReceiveProps(props){
+		this.setState(props)
 	}
 }
 class TeamSelect extends React.Component {
@@ -150,21 +158,23 @@ class TeamSelect extends React.Component {
 			<TeamViewer
 				team={this.state.team1}
 				characters={this.state.characters}
+				setTeam={team=>this.setState({team1:team})}
 			/>
 			<ul>
 				{this.state.teams.map((team,index)=>
 					<li key={index}>
 						{team.name}
 						<button onClick={()=>this.setState({team1:team})}>&lt;-</button>
-						<button onClick={()=>this.setState({team1:team})}>-&gt;</button>
+						<button onClick={()=>this.setState({team2:team})}>-&gt;</button>
 					</li>
 				)}
 			</ul>
 			<TeamViewer
 				team={this.state.team1}
 				characters={this.state.characters}
+				setTeam={team=>this.setState({team2:team})}
 			/>
-			<button onClick={()=>this.state.fight()}>Go</button>
+			<button onClick={()=>this.fight()}>Go</button>
 		</div>;
 	}
 }
