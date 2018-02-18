@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 function initiative(){
     let t1 = roll(6);
     let t2 = roll(6);
@@ -33,9 +34,10 @@ function attack(job, hitMod, dmgMod, ac){
 }
 
 function combat(team1, team2){
-    let superString  = '';
+    let superString  = [];
     while(team1.length != 0 && team2.length != 0){
         let init = initiative();
+        superString.push("New Round!");
         if(init == -1){
             superString = assault(team1, team2, superString);
             superString = destroy(team2, superString);
@@ -52,20 +54,7 @@ function combat(team1, team2){
             superString = assault(team1, team2, superString);
             superString = destroy(team2, superString);
         }
-    }
-    superString = superString.concat("Survivors: ");
-    let i = 0;
-    if(team1.length !=0){
-        while(i < team1.length){
-            superString = superString.concat(team1[i].name+ ", ");
-            i++;
-        }
-    }
-    else{
-        while(i < team1.length){
-            superString = superString.concat(team2[i].name+ ", ");
-            i++;
-        }
+        superString.push("");
     }
     return superString;
 }
@@ -74,7 +63,7 @@ function destroy(team, superString){
     let i = 0;
     while(i < team.length){
         if(team[i].hp < 0){
-            superString = superString.concat("\n " + team[i].name + " has died!");
+            superString.push(team[i].name + " has died!");
             team.splice(i,1);
         }
         else
@@ -85,14 +74,13 @@ function destroy(team, superString){
 
 function assault(team1, team2, superString){
     let i = 0;
-    superString = superString.concat("\n\n" + " It is " + team1.name + "'s turn!")
     while(i < team1.length){
         let target = roll(team2.length)-1;
         let dmg = attack(team1[i].job, team1[i].hitMod, team1[i].dmgMod, team2[target].ac);
         console.log(dmg);
         team2[target].hp -= dmg;
         if(dmg != 0)
-            superString = superString.concat("\n " + team1[i].name + " has dealt " + dmg + " damage to " + team2[target].name + "!")
+            superString.push(team1[i].name + " has dealt " + dmg + " damage to " + team2[target].name + "!")
         i++;
     }
     return superString;
@@ -136,7 +124,9 @@ class Fight extends React.Component {
 		};
 	}
 	render(){
-		return this.state.message;
+		return <ol>{this.state.message.map((str,i) =>
+		    <li key = {i}>{str}</li>
+        )}</ol>;
 	}
 }
 
