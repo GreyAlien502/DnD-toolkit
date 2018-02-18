@@ -8,12 +8,15 @@ body {
 	font-family: 'TeX Gyre Adventor', Sans-Serif;
 }
 
+ul, ol {
+	list-style:none;
+}
+
 button {
 		border:none;
 		color:black;
 		background-color:$color;
 }
-
 input, button {
 	border-radius:.5em;
 	font-size:20px;
@@ -25,6 +28,19 @@ input {
 	color: $color;
 	background-color:black;
 }
+
+
+
+#teamSelect {
+	display: grid;
+	grid-template-columns: 30% 30% 30%;
+	> ul, > div{
+		justify-self: center;
+	}
+}
+
+
+
 
 #menu {
 	margin-top: 0;
@@ -52,5 +68,3 @@ input {
 	}
 }
 
-#furtherInfo {
-}

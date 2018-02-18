@@ -76,7 +76,7 @@ class CharacterLibrary extends React.Component {
         var teamDiv, charDiv;
         if(this.state.isCharToggleOn){
             charDiv = <div>{this.state.characters.map(function(d, idx){
-                return (<li key={idx}><button onClick={()=>charaSelect(d)} >Name: {d.name} Job: {d.job} Level: {d.level} </button>
+                return (<li key={idx}><button onClick={()=>charaSelect(d)} > {d.name} : {d.job} Level {d.level} </button>
                     <button onClick={()=>charEdit(d)}>edit</button>
                     <button onClick={()=>charDel(d)}>remove</button>
                 </li>)

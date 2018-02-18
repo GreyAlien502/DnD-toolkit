@@ -171,25 +171,27 @@ class TeamSelect extends React.Component {
 	}
 	render(){
 		return <div>
-			<TeamViewer
-				team={this.state.team1}
-				characters={this.state.characters}
-				setTeam={team=>this.setState({team1:team})}
-			/>
-			<ul>
-				{this.state.teams.map((team,index)=>
-					<li key={index}>
-						{team.name}
-						<button onClick={()=>this.setState({team1:team})}>&lt;-</button>
-						<button onClick={()=>this.setState({team2:team})}>-&gt;</button>
-					</li>
-				)}
-			</ul>
-			<TeamViewer
-				team={this.state.team2}
-				characters={this.state.characters}
-				setTeam={team=>this.setState({team2:team})}
-			/>
+			<div id="teamSelect">
+				<TeamViewer
+					team={this.state.team1}
+					characters={this.state.characters}
+					setTeam={team=>this.setState({team1:team})}
+				/>
+				<ul>
+					{this.state.teams.map((team,index)=>
+						<li key={index}>
+							<button onClick={()=>this.setState({team1:team})}>&lt;</button>
+							{team.name}
+							<button onClick={()=>this.setState({team2:team})}>&gt;</button>
+						</li>
+					)}
+				</ul>
+				<TeamViewer
+					team={this.state.team2}
+					characters={this.state.characters}
+					setTeam={team=>this.setState({team2:team})}
+				/>
+			</div>
 			<button onClick={()=>this.state.fight(this.state.team1,this.state.team2)}>Go</button>
 		</div>;
 	}
