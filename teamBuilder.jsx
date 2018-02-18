@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {CharacterInfo} from './base.js';
+import {CharacterInfo} from './base.jsx';
 
 class TeamBuilder extends React.Component {
     constructor(props){
@@ -12,12 +12,12 @@ class TeamBuilder extends React.Component {
 		this.state.teams.length!=0?<div>
 			<ul>
 				{this.state.teams.map((team,index)=>
-					<li key={index}>{ team.name<button onClick={()=>this.remove(index)}) }</li>
-				)}
+					<li key={index}>{ team.name}<button onClick={()=>this.remove(index)}></button></li>
+				) }
 			</ul>
 			<ul>
 				{Object.keys(this.state.teams[teamNumber].members).map(id => 
-					<li key={id}> <CharacterInfo character={this.state.teams[teamNumber].members[id]}></li>
+					<li key={id}> <CharacterInfo character={this.state.teams[teamNumber].members[id]}/></li>
 				)}
 			</ul>
 		</div> : null
@@ -28,6 +28,7 @@ class TeamBuilder extends React.Component {
 					<CharacterInfo character={character}/>
 				</li>
 			) }
+		</ul>
         </div>;
     }
 }
