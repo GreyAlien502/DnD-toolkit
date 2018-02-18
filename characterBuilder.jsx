@@ -16,23 +16,30 @@ function pickJob(){
 class CharacterBuilder extends React.Component {
     constructor(props){
         super(props)
-        this.state=Object.assign({char:null},props);
+        this.state={
+            char : null,
+            buildLevel : 1,
+            addCharacter: props.addCharacter,
+        }
     }
 
     render(){
         let buildFighter = () =>{
-            this.setState({char : new Character("Fighter", "fighter", 1)});
+            this.setState({char : new Character("Fighter", "fighter", this.state.buildLevel)});
         }
         let buildCleric = () =>{
-            this.setState({char : new Character("Cleric", "cleric", 1)});
+            this.setState({char : new Character("Cleric", "cleric", this.state.buildLevel)});
         }
         let buildThief = () =>{
-            this.setState({char : new Character("Thief", "thief", 1)});
+            this.setState({char : new Character("Thief", "thief", this.state.buildLevel)});
         }
         let buildMU = () =>{
-            this.setState({char : new Character("Magic-User", "MU", 1)});
+            this.setState({char : new Character("Magic-User", "MU", this.state.buildLevel)});
         }
 
+        let setLevel = () =>{
+            this.setState({buildLevel : document.getElementById("newLevel").value})
+        }
 
         function buildRandom(){
             let jobPicker = pickJob();
@@ -52,6 +59,7 @@ class CharacterBuilder extends React.Component {
         }
 
         return <div><p>
+            <button onClick={setLevel}>Change Level</button><input type="text" id="newLevel"/> <br/>
 		<button onClick={buildFighter}> Create Fighter </button>
 		<button onClick={buildCleric}> Create Cleric </button> <br/>
 		<button onClick={buildThief}> Create Thief </button> 
@@ -61,7 +69,8 @@ class CharacterBuilder extends React.Component {
 			<div>
 				<CharacterInfo character={this.state.char} />
 				<div><button onClick={save}>Save</button>
-				<input type="text" id="newName"/></div>
+				<input type="text" id="newName"/>
+                </div>
 			</div>
 		:
 			null
