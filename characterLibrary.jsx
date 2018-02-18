@@ -21,7 +21,8 @@ class CharacterLibrary extends React.Component {
             character: null,
             addPressed: false,
             editPressed: false,
-            character: null
+            character: null,
+	    update: props.update
         }
     }
 
@@ -95,7 +96,7 @@ class CharacterLibrary extends React.Component {
             teamDiv = <TeamBuilder
 	    	teams={this.state.teams}
 		characters={this.state.characters}
-		updateLibrary={(newTeamList) => teamList.update({teams : newTeamList})}/>;
+		updateLibrary={(newTeamList) => this.state.update({teams : newTeamList})}/>;
         }
         else {
             teamDiv = <div  />;
