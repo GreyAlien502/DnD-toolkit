@@ -36,7 +36,7 @@ function combat(team1, team2){
     let superString  = '';
     while(team1.length != 0 && team2.length != 0){
         let init = initiative();
-	console.log(superString);
+	    console.log(superString);
         if(init == -1){
             superString = assault(team1, team2, superString);
             superString = destroy(team2, superString);
@@ -54,6 +54,10 @@ function combat(team1, team2){
             superString = destroy(team2, superString);
         }
     }
+    if(team1.length !=0)
+        superString = superString.concat(team1.name + " has wom!");
+    else
+        superString = superString.concat(team2.name + " has wom!");
     return superString;
 }
 
@@ -72,6 +76,7 @@ function destroy(team, superString){
 
 function assault(team1, team2, superString){
     let i = 0;
+    superString = superString.concat("\n\n" + " It is " + team1.name + "'s turn!")
     while(i < team1.length){
         let target = roll(team2.length)-1;
         let dmg = attack(team1[i].job, team1[i].hitMod, team1[i].dmgMod, team2[target].ac);
