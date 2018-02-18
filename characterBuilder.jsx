@@ -192,11 +192,11 @@ class CharacterBuilder extends React.Component {
             this.state.addCharacter(this.state.char);
         }
 
-        return <div>
-		<button onClick={buildFighter}> Create Fighter </button> 
-		<button onClick={buildCleric}> Create Cleric </button> 
+        return <div><p>
+		<button onClick={buildFighter}> Create Fighter </button>
+		<button onClick={buildCleric}> Create Cleric </button> <br/>
 		<button onClick={buildThief}> Create Thief </button> 
-		<button onClick={buildMU}>Create Magic-User</button>
+		<button onClick={buildMU}>Create Magic-User</button><br/>
         <button onClick={buildRandom}>Pick Randomly</button>
 		{this.state.char?
 			<div>
@@ -207,7 +207,7 @@ class CharacterBuilder extends React.Component {
 		:
 			null
 		}
-
+        </p>
         </div>;
     }
 }
