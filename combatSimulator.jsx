@@ -55,6 +55,19 @@ function combat(team1, team2){
         }
         superString.push("");
     }
+    let i = 0;
+    superString.push("Survivors: ");
+    if(team1.length != null){
+        while(i < team1.length){
+            superString.push(team1[i].name);
+            i++;
+        }
+    } else{
+        while(i < team2.length){
+            superString.push(team2[i].name);
+            i++;
+        }
+    }
     return superString;
 }
 
