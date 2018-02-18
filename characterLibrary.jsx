@@ -1,86 +1,96 @@
 import React from 'react';
+import {Character} from './base.jsx';
+import {TeamBuilder} from './teamBuilder.jsx';
 
-//custom-made characterModifier
+//custom-made characterModifierA
 import {CharacterModifier} from './characterModifier.jsx';
-import {TeamBuilder} from './TeamBuilder.jsx';
+
 
 class CharacterLibrary extends React.Component {
-	constructor(props) {
+    constructor(props) {
         super(props)
         this.state = {
-        	characters: props.characters,
-			teams: props.teams,
+            characters: props.characters,
+            teams: props.teams,
+            addCharacter: props.addCharacter,
             isCharToggleOn: false,
             isTeamToggleOn: false,
             isCharModifying: false,
-			character: ''
+            character: null,
+            addPressed: false
         }
     }
 
     componentWillReceiveProps(nextProp){
-        this.setState({character: nextProp.character})
+        this.setState(nextProp);
     }
 
     handleCharToggle () {
-		console.log("say hi");
         this.setState({
             isCharToggleOn: !this.state.isCharToggleOn
-		});
+        });
     }
 
     handleTeamToggle () {
-		this.setState({
-			isTeamToggleOn: !this.state.isTeamToggleOn
-		})
-	}
+        this.setState({
+            isTeamToggleOn: !this.state.isTeamToggleOn
+        })
+    }
 
-	render(){
-	    let charSelecting = '';
-	    let chara;
-		let charaSelect=(d)=> {
-		    this.setState({
-            	isCharModifying: true,
-				character : d
+    handleAddNew(){
+        this.setState({addPressed : !this.state.addPressed})
+    }
+
+
+
+    render(){
+        let charSelecting = '';
+        let chara;
+        let charaSelect=(d)=> {
+            this.setState({
+                isCharModifying: true,
+                character : d
             })
-		}
-		var teamDiv, charDiv;
-		if(this.state.isCharToggleOn){
-			charDiv = <div>{this.state.characters.map(function(d, idx){
+        }
+        var teamDiv, charDiv;
+        if(this.state.isCharToggleOn){
+            charDiv = <div>{this.state.characters.map(function(d, idx){
                 return (<li key={idx}><button onClick={()=>charaSelect(d)} key={idx}>Name: {d.name} Job: {d.job} Level: {d.level} </button></li>)
             })}
-                <img src={'http://barkpost-assets.s3.amazonaws.com/wp-content/uploads/2013/11/plainDoge-700x525.jpg'} width="300" />
-                {this.state.isCharModifying?<CharacterModifier character={this.state.character} val={[]} />: null}</div>;
-		}
-		else{
-			charDiv = <div />;
-		}
+                {this.state.isCharModifying?<CharacterModifier character={this.state.character}/>: null}</div>;
+        }
+        else{
+            charDiv = <div />;
+        }
 
+        let addNew = () =>{
+            this.state.addCharacter(new Character(document.getElementById("newName").value, document.getElementById("newJob").value, document.getElementById("newLevel").value))
+        }
 
-		if(this.state.isTeamToggleOn){
-			teamDiv = <div>{this.state.teams.map(function(d, idx){
-                return (<li key={idx}><button key={idx}>{d.name}{d.hp}</button></li>)})}
-                 <img src={'http://barkpost-assets.s3.amazonaws.com/wp-content/uploads/2013/11/plainDoge-700x525.jpg'} width="300" /></div>;
-		}
-		else {
-			teamDiv = <div  />;
-		}
+        if(this.state.isTeamToggleOn){
+            teamDiv = <TeamBuilder/>;
+        }
+        else {
+            teamDiv = <div  />;
+        }
 
-		return <div>
-			<br />
-			<button onClick={()=>this.handleCharToggle()}>
-				character
-			</button>
+        return <div>
+            <br />
+            <button onClick={()=>this.handleCharToggle()}> character </button>
+            <button onClick={()=>this.handleTeamToggle()}> teams</button><br/>
+            <button onClick={()=>this.handleAddNew()}>Add a Character</button>
+            <div >
+                {charDiv}{teamDiv}
+            </div>
+            {this.state.addPressed? <div>
+                <button>Name</button><input type="text" id="newName"/><br/>
+                <button>Job</button><input type="text" id="newJob"/><br/>
+                <button>Level</button><input type="text" id="newLevel"/><br/>
+                <button onClick={addNew}>Save</button>
+            </div> : null}
+        </div>;
 
-        	<button onClick={()=>this.handleTeamToggle()}>
-            	teams
-        	</button>
-			<div >
-            {charDiv}{teamDiv}
-			</div>
-
-			</div>;
-
-	}
+    }
 }
 
 

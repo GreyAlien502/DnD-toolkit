@@ -47,6 +47,7 @@ class Main extends React.Component {
 					characters={this.state.characters}
 					teams={this.state.teams}
 					update={(newState)=>this.setState(newState)}
+                    addCharacter={(character)=>addCharacter(character)}
 				/>)
 			}[this.state.mode]}
 		</div>);
