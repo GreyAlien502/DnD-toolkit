@@ -12,7 +12,7 @@ class Main extends React.Component {
 		let charData = JSON.parse(window.localStorage.getItem('characterData'));
 		this.state = {
 			characters: charData?charData.characters:[],
-			teams: charData?charData.teams:[],
+			teams: charData?charData.teams:['default'],
 			mode: 'character builder'
 		};
 	}

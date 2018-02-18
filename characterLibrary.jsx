@@ -2,7 +2,7 @@ import React from 'react';
 
 //custom-made characterModifier
 import {CharacterModifier} from './characterModifier.jsx';
-
+import {TeamBuilder} from './TeamBuilder.jsx';
 
 class CharacterLibrary extends React.Component {
 	constructor(props) {
@@ -22,6 +22,7 @@ class CharacterLibrary extends React.Component {
     }
 
     handleCharToggle () {
+		console.log("say hi");
         this.setState({
             isCharToggleOn: !this.state.isCharToggleOn
 		});
@@ -47,7 +48,8 @@ class CharacterLibrary extends React.Component {
 			charDiv = <div>{this.state.characters.map(function(d, idx){
                 return (<li key={idx}><button onClick={()=>charaSelect(d)} key={idx}>Name: {d.name} Job: {d.job} Level: {d.level} </button></li>)
             })}
-                {this.state.isCharModifying?<CharacterModifier character={this.state.character}/>: null}</div>;
+                <img src={'http://barkpost-assets.s3.amazonaws.com/wp-content/uploads/2013/11/plainDoge-700x525.jpg'} width="300" />
+                {this.state.isCharModifying?<CharacterModifier character={this.state.character} val={[]} />: null}</div>;
 		}
 		else{
 			charDiv = <div />;
@@ -55,7 +57,7 @@ class CharacterLibrary extends React.Component {
 
 
 		if(this.state.isTeamToggleOn){
-			teamDiv = <div class="column">{this.state.teams.map(function(d, idx){
+			teamDiv = <div>{this.state.teams.map(function(d, idx){
                 return (<li key={idx}><button key={idx}>{d.name}{d.hp}</button></li>)})}
                  <img src={'http://barkpost-assets.s3.amazonaws.com/wp-content/uploads/2013/11/plainDoge-700x525.jpg'} width="300" /></div>;
 		}
