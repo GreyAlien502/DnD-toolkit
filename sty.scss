@@ -1,14 +1,56 @@
+$color: #05f;
+
 body {
 	color: black;
 	background: url(images/background.png);
-	font-size: 30px;
+	font-size: 20px;
+	margin:0;
+	font-family: 'TeX Gyre Adventor', Sans-Serif;
 }
 
 button {
-	color:#00204;
-	background-color:#05f;
-	border: 3px solid #00223f;
-	border-radius: 1em;
+		border:none;
+		color:black;
+		background-color:$color;
 }
+
+input, button {
+	border-radius:.5em;
+	font-size:20px;
+	padding:.25em;
+	margin:.25em;
+}
+
+input {
+	color: $color;
+	background-color:black;
+}
+
 #menu {
+	margin-top: 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	background-color:#05f;
+
+	> button {
+		font-size:40px;
+	}
+	margin-bottom:1em;
+}
+
+#sideMenu {
+	background-color: lighten(adjust-hue( $color, -16% ), 10%);
+	border-radius: 0 1em 1em 0;
+	width:20%;
+	float: left;
+	padding: .5em;
+	display:flex;
+	flex-direction: column;
+	> button{
+		display:block;
+	}
+}
+
+#furtherInfo {
 }

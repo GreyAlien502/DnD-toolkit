@@ -58,24 +58,30 @@ class CharacterBuilder extends React.Component {
             this.state.addCharacter(this.state.char);
         }
 
-        return <div><p>
-            <button onClick={setLevel}>Change Level</button><input type="text" id="newLevel"/> <br/>
-		<button onClick={buildFighter}> Create Fighter </button>
-		<button onClick={buildCleric}> Create Cleric </button> <br/>
-		<button onClick={buildThief}> Create Thief </button> 
-		<button onClick={buildMU}>Create Magic-User</button><br/>
-        <button onClick={buildRandom}>Pick Randomly</button>
-		{this.state.char?
-			<div>
+        return <div>
+		<div className="sideItem">
+			<button onClick={setLevel}>Change Level</button><input type="text" id="newLevel"/>
+		</div>
+		<div id="sideMenu" className="sideItem">
+			<button onClick={buildFighter}> Create Fighter </button>
+			<button onClick={buildCleric}> Create Cleric </button>
+			<button onClick={buildThief}> Create Thief </button> 
+			<button onClick={buildMU}>Create Magic-User</button>
+			<button onClick={buildRandom}>Pick Randomly</button>
+		</div>
+		<br/>
+		<div id="furtherInfo">
+			{this.state.char?
+				<div>
 				<CharacterInfo character={this.state.char} />
 				<div><button onClick={save}>Save</button>
 				<input type="text" id="newName"/>
-                </div>
-			</div>
-		:
-			null
-		}
-        </p>
+				</div>
+				</div>
+			:
+				null
+			}
+		</div>
         </div>;
     }
 }

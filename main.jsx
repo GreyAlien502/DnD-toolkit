@@ -64,16 +64,18 @@ class Main extends React.Component {
 			this.save();
 		};
 
-		return (<div id='menu'>
-			<button onClick={()=>this.setState({'mode':'character builder'})}>
-				Character Builder
-			</button>
-			<button onClick={()=>this.setState({'mode':'combat simulator'})}>
-				Combat Simulator
-			</button>
-			<button onClick={()=>this.setState({'mode':'character library'})}>
-				Character Library
-			</button>
+		return (<div>
+			<div id='menu'>
+				<button onClick={()=>this.setState({'mode':'character builder'})}>
+					Character Builder
+				</button>
+				<button onClick={()=>this.setState({'mode':'combat simulator'})}>
+					Combat Simulator
+				</button>
+				<button onClick={()=>this.setState({'mode':'character library'})}>
+					Character Library
+				</button>
+			</div>
 			{{
 				'character builder': <CharacterBuilder
 					addCharacter={(character)=>addCharacter(character)}
