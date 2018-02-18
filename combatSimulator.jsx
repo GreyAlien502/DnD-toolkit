@@ -61,8 +61,8 @@ function destroy(team, superString){
     let i = 0;
     while(i < team.length){
         if(team[i].hp < 0){
-            team.splice(i,1);
             superString = superString.concat("\n " + team[i].name + " has died!");
+            team.splice(i,1);
         }
         else
             i++;
