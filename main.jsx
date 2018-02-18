@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import {CharacterBuilder}  from './characterBuilder.jsx';
 import {CombatSimulator} from './combatSimulator.jsx';
@@ -27,6 +28,33 @@ class Main extends React.Component {
 			this.setState({characters:characters});
 			this.save();
 		};
+		let removeCharacter = id => {
+			let characters = this.state.characters.slice();
+			let length = characters.length;
+			for(var i=0; i< characters.length; i++) {
+                // if(!shallowCompare(character,characters[i])){
+                //     character.characters[i] = null;
+                //     length = length -1;
+                //     break;
+                // }
+				if(id == characters[i].id) {
+					characters[i] = null;
+					console.log(length);
+					length = length -1;
+					break;
+				}
+			}
+			let new_characters = [];
+			let iter = 0;
+			for (var i=0; i < characters.length; i++){
+				if(characters[i] != null) {
+					new_characters[iter] = characters[i];
+					iter ++;
+                }
+			}
+			this.setState({characters:new_characters});
+			this.save();
+		};
 		return (<div>
 			<button onClick={()=>this.setState({'mode':'character builder'})}>
 				Character Builder
@@ -38,7 +66,9 @@ class Main extends React.Component {
 				Character Library
 			</button>
 			{{
-				'character builder': <CharacterBuilder addCharacter={(character)=>addCharacter(character)}/>,
+				'character builder': <CharacterBuilder
+					addCharacter={(character)=>addCharacter(character)}
+				/>,
 				'combat simulator': (<CombatSimulator
 					characters={this.state.characters}
 					teams={this.state.teams}
@@ -48,6 +78,7 @@ class Main extends React.Component {
 					teams={this.state.teams}
 					update={(newState)=>this.setState(newState)}
                     addCharacter={(character)=>addCharacter(character)}
+                    removeCharacter={(id)=>removeCharacter(id)}
 				/>)
 			}[this.state.mode]}
 		</div>);

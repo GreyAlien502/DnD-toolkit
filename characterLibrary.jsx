@@ -13,6 +13,7 @@ class CharacterLibrary extends React.Component {
             characters: props.characters,
             teams: props.teams,
             addCharacter: props.addCharacter,
+            removeCharacter: props.removeCharacter,
             isCharToggleOn: false,
             isTeamToggleOn: false,
             isCharModifying: false,
@@ -52,12 +53,21 @@ class CharacterLibrary extends React.Component {
                 character : d
             })
         }
+        let charEdit=(d)=> {
+
+        }
+        let charDel=(d)=> {
+            this.state.removeCharacter(d.id);
+        }
         var teamDiv, charDiv;
         if(this.state.isCharToggleOn){
             charDiv = <div>{this.state.characters.map(function(d, idx){
-                return (<li key={idx}><button onClick={()=>charaSelect(d)} key={idx}>Name: {d.name} Job: {d.job} Level: {d.level} </button></li>)
+                return (<li key={idx}><button onClick={()=>charaSelect(d)} >Name: {d.name} Job: {d.job} Level: {d.level} </button>
+                    <button onClick={()=>charEdit(d)}>edit</button>
+                    <button onClick={()=>charDel(d)}>remove</button>
+                </li>)
             })}
-                {this.state.isCharModifying?<CharacterModifier character={this.state.character}/>: null}</div>;
+                </div>;
         }
         else{
             charDiv = <div />;
@@ -87,9 +97,9 @@ class CharacterLibrary extends React.Component {
                 {charDiv}{teamDiv}
             </div>
             {this.state.addPressed? <div>
-                <button>Name</button><input type="text" id="newName"/><br/>
-                <button>Job</button><input type="text" id="newJob"/><br/>
-                <button>Level</button><input type="text" id="newLevel"/><br/>
+                <li>Name</li><input type="text" id="newName"/><br/>
+                <li>Job</li><input type="text" id="newJob"/><br/>
+                <li>Level</li><input type="text" id="newLevel"/><br/>
                 <button onClick={addNew}>Save</button>
             </div> : null}
         </div>;
