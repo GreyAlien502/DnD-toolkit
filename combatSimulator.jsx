@@ -14,22 +14,6 @@ function roll(num){
     return Math.floor(Math.random() * num) + 1;
 }
 
-function makeTeam(almostTeam) {
-    let i = 0;
-    keyList = almostTeam.keys();
-    let team = null;
-    while (i < keyList.length) {
-        let j = 0;
-        let num = almostTeam[keyList[i]];
-        while(j < num){
-            let newChar = this.state.characters.filter(char => char.id == keyList[i])[0];
-            team.add(newChar);
-            j++;
-        }
-        i++;
-    }
-    return team;
-}
 
 function attack(job, hitMod, dmgMod, ac){
     let hit = roll(20) + hitMod;
@@ -48,9 +32,11 @@ function attack(job, hitMod, dmgMod, ac){
     }
 }
 
-function combat(team1, team2, superString){
+function combat(team1, team2){
+    let superString  = '';
     while(team1.length != 0 && team2.length != 0){
         let init = initiative();
+	console.log(superString);
         if(init == -1){
             superString = assault(team1, team2, superString);
             superString = destroy(team2, superString);
@@ -75,26 +61,26 @@ function destroy(team, superString){
     let i = 0;
     while(i < team.length){
         if(team[i].hp < 0){
-            team[i].remove();
-            superString.concat("\n " + team[i].name + " has died!");
+            team.splice(i,1);
+            superString = superString.concat("\n " + team[i].name + " has died!");
         }
         else
             i++;
     }
-    return {team, superString};
+    return  superString;
 }
 
 function assault(team1, team2, superString){
     let i = 0;
     while(i < team1.length){
         let target = roll(team2.length)-1;
-        dmg = attack(team1[i].job, team1[i].hitMod, team1[i].dmgMod, team2[target].ac);
+        let dmg = attack(team1[i].job, team1[i].hitMod, team1[i].dmgMod, team2[target].ac);
         team2[target].hp -= dmg;
         if(dmg != 0)
-            superString.concat("\n " + team1[i].name + " has dealt " + dmg + " damage to " + team2[target].name + "!")
+            superString = superString.concat("\n " + team1[i].name + " has dealt " + dmg + " damage to " + team2[target].name + "!")
         i++;
     }
-    return {team2, superString};
+    return superString;
 }
 
 function chooseDmg(job) {
@@ -111,12 +97,29 @@ import {CharacterInfo} from './base.jsx';
 class Fight extends React.Component {
 	constructor(props){
 		super(props);
+		let makeTeam=(almostTeam)=> {
+		    let i = 0;
+		    let keyList = Object.keys(almostTeam);
+		    let team = [];
+		    while (i < keyList.length) {
+		console.log(team)
+			let j = 0;
+			let num = almostTeam[keyList[i]];
+			while(j < num){
+			    let newChar = props.characters.filter(char => char.id == keyList[i])[0];
+			    team.push(Object.assign({'hp':newChar.hpMax},newChar));
+			    j++;
+			}
+			i++;
+		    }
+		    return team;
+		}
 		this.state={
 			message:combat(
-				makeTeam(props.team1),
-				makeTeam(props.team2)
+				makeTeam(props.team1.members),
+				makeTeam(props.team2.members)
 			)
-		}
+		};
 	}
 	render(){
 		return this.state.message;
@@ -135,17 +138,17 @@ class TeamViewer extends React.Component {
 			<div>
 				<h1>{this.state.team.name}</h1>
 				<ul>
-					{Object.keys(this.state.team.members).map(character=>
-						<li key={character.id}>
-							<CharacterInfo character={getCharacter(character.id)}/>
+					{Object.keys(this.state.team.members).map(id=>
+						<li key={id}>
+							<CharacterInfo character={getCharacter(id)}/>
 						</li>
 					)}
 				</ul>
 			</div>:
 			"none.";
 	}
-	compontentWillReceiveProps(props){
-		this.setState(props)
+	componentWillReceiveProps(props){
+		this.setState(props);
 	}
 }
 class TeamSelect extends React.Component {
@@ -170,11 +173,11 @@ class TeamSelect extends React.Component {
 				)}
 			</ul>
 			<TeamViewer
-				team={this.state.team1}
+				team={this.state.team2}
 				characters={this.state.characters}
 				setTeam={team=>this.setState({team2:team})}
 			/>
-			<button onClick={()=>this.fight()}>Go</button>
+			<button onClick={()=>this.state.fight(this.state.team1,this.state.team2)}>Go</button>
 		</div>;
 	}
 }
@@ -201,10 +204,17 @@ class CombatSimulator extends React.Component {
 						team2={this.state.team2}
 						teams={this.state.teams}
 						characters={this.state.characters}
+						fight={(team1,team2)=>this.setState({
+							team1:team1,
+							team2:team2,
+							stage:'fite'
+						})}
 					/>,
 					'fite': <Fight
-						teams={this.state.teams}
+						team1={this.state.team1}
+						team2={this.state.team2}
 						characters={this.state.characters}
+
 					/>
 				}[this.state.stage]
 			}
