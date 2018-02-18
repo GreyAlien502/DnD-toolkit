@@ -20,6 +20,7 @@ class TeamBuilder extends React.Component {
     }
     render(){
 	let teamNumber = this.state.teamNumber;
+	let char = id => this.state.characters.filter(char=>char.id==id)[0];
         return <div>
 		<h2>Teams</h2>
 		<ul>
@@ -33,8 +34,7 @@ class TeamBuilder extends React.Component {
 			{this.state.teams.length!=0?
 				this.state.teams.map((team,index)=>
 					<li key={index}>
-					{team.name}
-					<button onClick={()=>this.setState({teamNumber:index})}>Edit</button>
+					<button onClick={()=>this.setState({teamNumber:index})}> {team.name} </button>
 					<button onClick={()=>this.remove(index)}>-</button>
 				</li>
 				) 
@@ -44,14 +44,17 @@ class TeamBuilder extends React.Component {
 		{this.state.teamNumber!=null?<div>
 			<ul>
 				{Object.keys(this.state.teams[teamNumber].members).map(id => 
-					<li key={id}> <CharacterInfo character={this.state.teams[teamNumber].members[id]}/></li>
+					<li key={id}>
+						{this.state.teams[teamNumber].members[id]}
+						<CharacterInfo character={char(id)}/>
+					</li>
 				)}
 			</ul> 
 			<h2>Characters</h2>
 			<ul>
 				{this.state.characters.map(character=>
 					<li key={character.id}>
-							<button onClick={()=>this.addCharacter(character.id)}>&lt;</button>
+						<button onClick={()=>this.addCharacter(character.id)}>&lt;</button>
 						<CharacterInfo character={character}/>
 					</li>
 				) }
@@ -70,7 +73,11 @@ class TeamBuilder extends React.Component {
     addCharacter(id){
 	    let teamNumber = this.state.teamNumber;
 	    let newTeams = this.state.teams.slice();
-	    newTeams[teamNumber].members[id] = this.state.characters.filter(character=>character.id==id)[0].hpMax;
+	    if(null==newTeams[teamNumber].members[id]){
+		    newTeams[teamNumber].members[id]  = 1;
+	    }else{
+		    newTeams[teamNumber].members[id] += 1;
+	    }
 	    this.updateTeams(newTeams);
 	}
 }
