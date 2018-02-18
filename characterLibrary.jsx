@@ -68,7 +68,11 @@ class CharacterLibrary extends React.Component {
         }
 
         if(this.state.isTeamToggleOn){
-            teamDiv = <TeamBuilder/>;
+            teamDiv = <TeamBuilder
+	    	teams={this.state.teams}
+		characters={this.state.characters}
+		updateLibrary={()=>0}
+	    />;
         }
         else {
             teamDiv = <div  />;
