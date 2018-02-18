@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {CharacterInfo} from './base.jsx';
 
 function initiative(){
     let t1 = roll(6);
@@ -14,7 +14,6 @@ function initiative(){
 function roll(num){
     return Math.floor(Math.random() * num) + 1;
 }
-
 
 function attack(job, hitMod, dmgMod, ac){
     let hit = roll(20) + hitMod;
@@ -94,8 +93,6 @@ function chooseDmg(job) {
     if(job == "cleric")
         return roll(4)+1;
 }
-
-import {CharacterInfo} from './base.jsx';
 
 class Fight extends React.Component {
 	constructor(props){
