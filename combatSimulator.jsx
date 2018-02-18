@@ -36,7 +36,6 @@ function combat(team1, team2){
     let superString  = '';
     while(team1.length != 0 && team2.length != 0){
         let init = initiative();
-	    console.log(superString);
         if(init == -1){
             superString = assault(team1, team2, superString);
             superString = destroy(team2, superString);
@@ -54,10 +53,20 @@ function combat(team1, team2){
             superString = destroy(team2, superString);
         }
     }
-    if(team1.length !=0)
-        superString = superString.concat(team1.name + " has wom!");
-    else
-        superString = superString.concat(team2.name + " has wom!");
+    superString = superString.concat("Survivors: ");
+    let i = 0;
+    if(team1.length !=0){
+        while(i < team1.length){
+            superString = superString.concat(team1[i].name+ ", ");
+            i++;
+        }
+    }
+    else{
+        while(i < team1.length){
+            superString = superString.concat(team2[i].name+ ", ");
+            i++;
+        }
+    }
     return superString;
 }
 
@@ -80,6 +89,7 @@ function assault(team1, team2, superString){
     while(i < team1.length){
         let target = roll(team2.length)-1;
         let dmg = attack(team1[i].job, team1[i].hitMod, team1[i].dmgMod, team2[target].ac);
+        console.log(dmg);
         team2[target].hp -= dmg;
         if(dmg != 0)
             superString = superString.concat("\n " + team1[i].name + " has dealt " + dmg + " damage to " + team2[target].name + "!")
@@ -107,7 +117,6 @@ class Fight extends React.Component {
 		    let keyList = Object.keys(almostTeam);
 		    let team = [];
 		    while (i < keyList.length) {
-		console.log(team)
 			let j = 0;
 			let num = almostTeam[keyList[i]];
 			while(j < num){
