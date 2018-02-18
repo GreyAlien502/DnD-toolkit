@@ -64,7 +64,7 @@ class Main extends React.Component {
 			this.save();
 		};
 
-		return (<div>
+		return (<div id='menu'>
 			<button onClick={()=>this.setState({'mode':'character builder'})}>
 				Character Builder
 			</button>

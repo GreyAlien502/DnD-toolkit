@@ -1,6 +1,13 @@
+#webpack/babel
 node_modules/
 package-lock.json
 main.js
+
+#sass
+.sass-cache
+sty.css
+sty.css.map
+
 .idea/
 # Created by https://www.gitignore.io/api/webstorm
 
