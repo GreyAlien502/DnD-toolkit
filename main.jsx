@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import shallowCompare from 'react-addons-shallow-compare';
 
 import {CharacterBuilder}  from './characterBuilder.jsx';
 import {CombatSimulator} from './combatSimulator.jsx';
@@ -32,11 +31,6 @@ class Main extends React.Component {
 			let characters = this.state.characters.slice();
 			let length = characters.length;
 			for(var i=0; i< characters.length; i++) {
-                // if(!shallowCompare(character,characters[i])){
-                //     character.characters[i] = null;
-                //     length = length -1;
-                //     break;
-                // }
 				if(id == characters[i].id) {
 					characters[i] = null;
 					console.log(length);
