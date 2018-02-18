@@ -1,4 +1,5 @@
 import React from 'react';
+
 function initiative(){
     let t1 = roll(6);
     let t2 = roll(6);
@@ -11,6 +12,23 @@ function initiative(){
 
 function roll(num){
     return Math.floor(Math.random() * num) + 1;
+}
+
+function makeTeam(almostTeam) {
+    let i = 0;
+    keyList = almostTeam.keys();
+    let team = null;
+    while (i < keyList.length) {
+        let j = 0;
+        let num = almostTeam[keyList[i]];
+        while(j < num){
+            let newChar = this.state.characters.filter(char => char.id == keyList[i])[0];
+            team.add(newChar);
+            j++;
+        }
+        i++;
+    }
+    return team;
 }
 
 function attack(job, hitMod, dmgMod, ac){
