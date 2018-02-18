@@ -27,13 +27,27 @@ class Main extends React.Component {
 			this.setState({characters:characters});
 			this.save();
 		};
+		let editCharacter = (character, id) => {
+            let newCharacter = Object.assign(
+                {id:(new Date()).getTime()},
+                character
+            );
+            let characters = this.state.characters.slice();
+            for(var i=0; i< characters.length; i++) {
+                if(id == characters[i].id) {
+                    characters[i] =  character;
+                    break;
+                }
+            }
+            this.setState({characters:characters});
+            this.save();
+		}
 		let removeCharacter = id => {
 			let characters = this.state.characters.slice();
 			let length = characters.length;
 			for(var i=0; i< characters.length; i++) {
 				if(id == characters[i].id) {
 					characters[i] = null;
-					console.log(length);
 					length = length -1;
 					break;
 				}
@@ -49,6 +63,7 @@ class Main extends React.Component {
 			this.setState({characters:new_characters});
 			this.save();
 		};
+
 		return (<div>
 			<button onClick={()=>this.setState({'mode':'character builder'})}>
 				Character Builder
@@ -73,6 +88,7 @@ class Main extends React.Component {
 					update={(newState)=>this.setState(newState)}
                     addCharacter={(character)=>addCharacter(character)}
                     removeCharacter={(id)=>removeCharacter(id)}
+					editCharacter={(character,id)=>editCharacter(character,id)}
 				/>)
 			}[this.state.mode]}
 		</div>);

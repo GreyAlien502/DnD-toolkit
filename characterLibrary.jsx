@@ -14,11 +14,14 @@ class CharacterLibrary extends React.Component {
             teams: props.teams,
             addCharacter: props.addCharacter,
             removeCharacter: props.removeCharacter,
+            editCharacter: props.editCharacter,
             isCharToggleOn: false,
             isTeamToggleOn: false,
             isCharModifying: false,
             character: null,
-            addPressed: false
+            addPressed: false,
+            editPressed: false,
+            character: null
         }
     }
 
@@ -41,20 +44,30 @@ class CharacterLibrary extends React.Component {
     handleAddNew(){
         this.setState({addPressed : !this.state.addPressed})
     }
-
+    handleEditController() {
+        this.setState({editPressed: !this.state.editPressed})
+    }
 
 
     render(){
         let charSelecting = '';
         let chara;
         let charaSelect=(d)=> {
+            // this.setState({
+            //     isCharModifying: true,
+            //     character : d
+            // })
+        }
+        let charEdit=(d)=> {
+            this.setState({editPressed: !this.state.editPressed});
+
             this.setState({
-                isCharModifying: true,
                 character : d
             })
         }
-        let charEdit=(d)=> {
-
+        let charEditProcess=()=> {
+            this.state.editCharacter(new Character(document.getElementById("editName").value, document.getElementById("editJob").value, document.getElementById("editLevel").value),this.state.character.id);
+            this.setState({editPressed: !this.state.editPressed});
         }
         let charDel=(d)=> {
             this.state.removeCharacter(d.id);
@@ -75,6 +88,7 @@ class CharacterLibrary extends React.Component {
 
         let addNew = () =>{
             this.state.addCharacter(new Character(document.getElementById("newName").value, document.getElementById("newJob").value, document.getElementById("newLevel").value))
+            this.setState({addPressed : !this.state.addPressed});
         }
 
         if(this.state.isTeamToggleOn){
@@ -101,6 +115,12 @@ class CharacterLibrary extends React.Component {
                 <li>Level</li><input type="text" id="newLevel"/><br/>
                 <button onClick={addNew}>Save</button>
             </div> : null}
+            {this.state.editPressed? <div>
+                <li>Name</li><input type="text" id="editName"/><br/>
+                <li>Job</li><input type="text" id="editJob"/><br/>
+                <li>Level</li><input type="text" id="editLevel"/><br/>
+                <button onClick={charEditProcess}>Save</button>
+            </div> :null}
         </div>;
 
     }
