@@ -30,46 +30,53 @@ function attack(job, hitMod, dmgMod, ac){
     }
 }
 
-function combat(team1, team2){
+function combat(team1, team2, superString){
     while(team1.length != 0 && team2.length != 0){
         let init = initiative();
         if(init == -1){
-            assault(team1, team2);
-            destroy(team2);
-            assault(team2, team1);
-            destroy(team1);
+            superString = assault(team1, team2, superString);
+            superString = destroy(team2, superString);
+            superString = assault(team2, team1, superString);
+            superString = destroy(team1, superString);
         } else if (init == 0){
-            assault(team1, team2);
-            assault(team2, team1);
-            destroy(team1);
-            destroy(team2);
+            superString = assault(team1, team2, superString);
+            superString = assault(team2, team1, superString);
+            superString = destroy(team1, superString);
+            superString = destroy(team2, superString);
         } else{
-            assault(team2, team1);
-            destroy(team1);
-            assault(team1, team2);
-            destroy(team2);
+            superString = assault(team2, team1, superString);
+            superString = destroy(team1, superString);
+            superString = assault(team1, team2, superString);
+            superString = destroy(team2, superString);
         }
     }
+    return superString;
 }
 
-function destroy(team){
+function destroy(team, superString){
     let i = 0;
     while(i < team.length){
-        if(team[i].hp < 0)
+        if(team[i].hp < 0){
             team[i].remove();
+            superString.concat("\n " + team[i].name + " has died!");
+        }
         else
             i++;
     }
+    return {team, superString};
 }
 
-function assault(team1, team2){
+function assault(team1, team2, superString){
     let i = 0;
     while(i < team1.length){
         let target = roll(team2.length)-1;
         dmg = attack(team1[i].job, team1[i].hitMod, team1[i].dmgMod, team2[target].ac);
         team2[target].hp -= dmg;
+        if(dmg != 0)
+            superString.concat("\n " + team1[i].name + " has dealt " + dmg + " damage to " + team2[target].name + "!")
         i++;
     }
+    return {team2, superString};
 }
 
 function chooseDmg(job) {
